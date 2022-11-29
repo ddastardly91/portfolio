@@ -10,10 +10,6 @@ body {
    color: rgb(85, 85, 85);
 }
 
-p {
-   letter-spacing: 1.1px;
-}
-
 ul {
    list-style-type: none;
 }

@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar.vue";
 const themeOverrides = {
    common: {
       primaryColor: "#ff6347",
+      fontSize: "15px",
    },
    Input: {
       borderHover: "1px solid rgba(255, 99, 71, 0.5)",

@@ -33,10 +33,7 @@ import Card from "./Card.vue";
       </div>
       <div class="featured-projects">
          <h3>Featured Projects</h3>
-         <p>
-            These are some projects which demonstrate some of the skills
-            learned.
-         </p>
+         <p>Why not take a look at some of my projects.</p>
          <div class="grid-container">
             <Card
                v-for="project in latestProjects"
@@ -124,5 +121,9 @@ import Card from "./Card.vue";
       grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
       gap: 20px;
    }
+}
+
+p {
+   letter-spacing: 1.1px;
 }
 </style>
