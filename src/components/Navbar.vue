@@ -77,6 +77,7 @@ const menuActivate = () => {
 nav {
    margin: 0 auto 30px auto;
    max-width: 1440px;
+   position: relative;
 
    .nav-right {
       display: flex;
@@ -103,7 +104,7 @@ nav {
          width: 20px;
          color: #999;
          position: absolute;
-         right: 342px;
+         right: 292px;
          z-index: 2;
       }
 

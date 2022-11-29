@@ -1,5 +1,7 @@
 <script setup>
 import { CommandLineIcon } from "@heroicons/vue/24/outline";
+import { latestProjects } from "../data/data";
+import Card from "./Card.vue";
 </script>
 
 <template>
@@ -15,7 +17,7 @@ import { CommandLineIcon } from "@heroicons/vue/24/outline";
             <br />
             I'm a <span>front-end web developer</span> from Preston, UK.
          </h1>
-         <p>Here are some of the skills I have picked up along my journey:</p>
+         <p>Here are some of the skills I have picked up along my journey.</p>
          <div class="skills-bar">
             <img src="https://skills.thijs.gg/icons?i=html" />
             <img src="https://skills.thijs.gg/icons?i=css" />
@@ -29,10 +31,29 @@ import { CommandLineIcon } from "@heroicons/vue/24/outline";
             <img src="https://skills.thijs.gg/icons?i=github" />
          </div>
       </div>
+      <div class="featured-projects">
+         <h3>Featured Projects</h3>
+         <p>
+            These are some projects which demonstrate some of the skills
+            learned.
+         </p>
+         <div class="grid-container">
+            <Card
+               v-for="project in latestProjects"
+               :key="project.id"
+               :data="project"
+            />
+         </div>
+      </div>
    </div>
 </template>
 
 <style lang="scss" scoped>
+.hero-container {
+   margin: 0 auto;
+   max-width: 1440px;
+}
+
 .brand {
    font-weight: 900;
    letter-spacing: 1.5px;
@@ -80,6 +101,7 @@ import { CommandLineIcon } from "@heroicons/vue/24/outline";
    .skills-bar {
       img {
          margin-right: 10px;
+         margin-bottom: 50px;
          transition: 300ms ease;
          cursor: pointer;
 
@@ -87,6 +109,20 @@ import { CommandLineIcon } from "@heroicons/vue/24/outline";
             scale: 1.3;
          }
       }
+   }
+}
+.featured-projects {
+   h3 {
+      font-size: 28px;
+   }
+
+   p {
+      margin-bottom: 15px;
+   }
+   .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 20px;
    }
 }
 </style>
