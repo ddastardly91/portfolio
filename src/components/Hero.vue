@@ -53,7 +53,7 @@ import { CommandLineIcon } from "@heroicons/vue/24/outline";
       transition: 500ms ease;
 
       &:hover {
-         color: tomato;
+         color: rgb(255, 99, 71);
       }
    }
 }
