@@ -1,5 +1,7 @@
 <script setup>
 import { ref } from "vue";
+import { RouterLink } from "vue-router";
+import { useAuthStore } from "../stores/authStore";
 import {
    Bars3Icon,
    MagnifyingGlassIcon,
@@ -7,9 +9,15 @@ import {
    CodeBracketIcon,
    CommandLineIcon,
    ChatBubbleBottomCenterIcon,
+   ShieldCheckIcon,
 } from "@heroicons/vue/24/outline";
 
-import { NInput, NDrawer, NDrawerContent } from "naive-ui";
+import { NInput, NDrawer, NDrawerContent, NAvatar, NPopover } from "naive-ui";
+import { storeToRefs } from "pinia";
+
+const authStore = useAuthStore();
+const { handleLogout } = authStore;
+const { user } = storeToRefs(authStore);
 
 const searchText = ref("");
 const searchLoading = ref(false);
@@ -34,6 +42,8 @@ const menuActivate = () => {
             :loading="searchLoading"
          />
 
+         <n-avatar v-if="user">AL</n-avatar>
+
          <Bars3Icon class="icon" @click="menuActivate" />
          <n-drawer v-model:show="menuActive" :width="350" placement="right">
             <n-drawer-content
@@ -46,7 +56,7 @@ const menuActivate = () => {
                      <HomeIcon
                         :style="{ width: '25px', marginRight: '10px' }"
                      />
-                     Home
+                     <RouterLink :to="{ name: 'home' }">Home</RouterLink>
                   </li>
                   <li>
                      <CodeBracketIcon
@@ -58,13 +68,25 @@ const menuActivate = () => {
                      <CommandLineIcon
                         :style="{ width: '25px', marginRight: '10px' }"
                      />
-                     Github
+                     <a href="https://github.com/ddastardly91" target="_blank"
+                        >Github</a
+                     >
                   </li>
                   <li>
                      <ChatBubbleBottomCenterIcon
                         :style="{ width: '25px', marginRight: '10px' }"
                      />
                      Contact
+                  </li>
+                  <br />
+                  <li>
+                     <ShieldCheckIcon
+                        :style="{ width: '25px', marginRight: '10px' }"
+                     />
+                     <div v-if="user" @click="handleLogout">Logout</div>
+                     <RouterLink v-else :to="{ name: 'admin' }"
+                        >Admin</RouterLink
+                     >
                   </li>
                </ul>
             </n-drawer-content>
@@ -103,15 +125,17 @@ nav {
       .icon-search {
          width: 20px;
          color: #999;
-         position: absolute;
-         right: 292px;
-         z-index: 2;
+         margin-right: 5px;
       }
 
       .nav-search {
          width: 250px;
-         padding-left: 30px;
-         margin-right: 35px;
+         margin-right: 25px;
+      }
+
+      .n-avatar {
+         margin-right: 25px;
+         cursor: pointer;
       }
    }
 }

@@ -1,5 +1,9 @@
 <script setup>
 import Post from "./Post.vue";
+
+const handleClick = () => {
+   console.log(post);
+};
 </script>
 
 <template>

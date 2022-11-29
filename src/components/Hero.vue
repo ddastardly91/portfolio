@@ -77,6 +77,7 @@ import Card from "./Card.vue";
 }
 
 .about {
+   margin-bottom: 50px;
    h1 {
       font-size: 44px;
       margin-bottom: 25px;
@@ -96,9 +97,10 @@ import Card from "./Card.vue";
    }
 
    .skills-bar {
+      display: flex;
+      align-items: center;
       img {
          margin-right: 10px;
-         margin-bottom: 50px;
          transition: 300ms ease;
          cursor: pointer;
 
