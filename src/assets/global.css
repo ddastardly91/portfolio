@@ -14,3 +14,23 @@ body {
 p {
    letter-spacing: 1.1px;
 }
+
+ul {
+   list-style-type: none;
+}
+
+.nav-list li {
+   font-size: 25px;
+   cursor: pointer;
+   transition: 300ms ease-in;
+}
+
+.nav-list li:hover {
+   color: tomato;
+   transform: translateX(20px);
+}
+
+li {
+   display: flex;
+   align-items: center;
+}
