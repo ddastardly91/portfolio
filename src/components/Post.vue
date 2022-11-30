@@ -32,7 +32,6 @@ const { post } = defineProps(["post"]);
 .post {
    margin-top: 15px;
    min-width: 345px;
-   // max-width: 345px;
    flex: 1;
    gap: 20px;
    border: 1px solid #efeff5;
@@ -70,13 +69,18 @@ const { post } = defineProps(["post"]);
       }
 
       span {
-         background-color: tomato;
+         background-color: rgb(0, 204, 160);
          padding: 2px 7px;
          border-radius: 25px;
          font-size: 12px;
          margin-right: 5px;
          color: white;
          font-weight: 500;
+         transition: 300ms ease-in;
+
+         &:hover {
+            background-color: rgb(0, 146, 114);
+         }
       }
    }
 
@@ -89,6 +93,7 @@ const { post } = defineProps(["post"]);
       a {
          font-weight: bold;
          color: rgb(0, 204, 160);
+         transition: 300ms ease-in;
 
          &:hover {
             color: rgb(0, 146, 114);
@@ -97,7 +102,7 @@ const { post } = defineProps(["post"]);
    }
 }
 
-@media (max-width: 1036px) {
+@media (max-width: 1280px) {
    .post {
       min-width: 100%;
    }

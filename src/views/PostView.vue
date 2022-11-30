@@ -1,8 +1,8 @@
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, RouterLink } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "../stores/authStore";
-import Comment from "../components/Comment.vue";
+// import Comment from "../components/Comment.vue";
 import { onBeforeMount } from "vue";
 import { TrashIcon } from "@heroicons/vue/24/outline";
 
@@ -23,6 +23,7 @@ const deletePost = () => {
 
 <template>
    <div class="post-container" v-if="singlePost">
+      <RouterLink :to="{ name: 'home' }"> &lt; Back to Homepage</RouterLink>
       <div class="post-image">
          <img :src="singlePost.imageURL" />
       </div>
@@ -65,12 +66,20 @@ const deletePost = () => {
    margin: 0 auto;
    max-width: 1440px;
 
+   a {
+      font-size: 16px;
+      font-weight: bold;
+   }
+
    .post-image {
       display: flex;
       align-items: center;
       justify-content: center;
       object-fit: cover;
       overflow: hidden;
+      border: 3px solid rgb(173, 173, 173);
+      background-color: #333;
+      margin-top: 20px;
 
       border-radius: 15px;
 
@@ -78,7 +87,9 @@ const deletePost = () => {
 
       img {
          width: 100%;
-         height: 100%;
+         max-width: 500px;
+         // height: 400px;
+         object-fit: cover;
       }
    }
 
@@ -109,7 +120,6 @@ const deletePost = () => {
 
       p::first-letter {
          font-weight: bold;
-         font-size: 30px;
       }
    }
 }
