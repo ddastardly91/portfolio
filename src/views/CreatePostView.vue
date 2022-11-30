@@ -1,31 +1,60 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useAuthStore } from "../stores/authStore";
 import { NButton, NUpload } from "naive-ui";
 import { storeToRefs } from "pinia";
 
 const useAuth = useAuthStore();
-const { user, errorMessage } = storeToRefs(useAuth);
 const { handleNewPost } = useAuth;
+const { user, errorMessage, successMessage } = storeToRefs(useAuth);
 
 const postData = reactive({
    title: "",
    content: "",
-   imageURL: "",
-   author_id: user.id,
+   file: null,
+   authorID: null,
 });
+
+const handleFileUpload = (file) => {
+   postData.file = file.file.file;
+   postData.authorID = user.value.id;
+};
+
+const sendPost = () => {
+   console.log(postData);
+};
 </script>
 
 <template>
    <div class="create-post-container">
       <!-- <img :src="imagePreview" /> -->
       <div class="input-container">
-         <input class="title-input" type="text" placeholder="Title..." />
-         <textarea placeholder="Enter some content..."></textarea>
-         <n-upload :on-change="handleNewPost" accept=".jpeg,.jpg,.png" :max="1">
+         <input
+            v-model="postData.title"
+            class="title-input"
+            type="text"
+            placeholder="Title..."
+         />
+         <textarea
+            v-model="postData.content"
+            placeholder="Enter some content..."
+         ></textarea>
+         <n-upload
+            :on-change="handleFileUpload"
+            accept=".jpeg,.jpg,.png"
+            :max="1"
+         >
             <n-button>Upload File</n-button>
          </n-upload>
-         <n-button type="warning">Publish</n-button>
+         <span class="error-message" v-show="errorMessage">{{
+            errorMessage
+         }}</span>
+         <span class="success-message" v-show="successMessage">{{
+            successMessage
+         }}</span>
+         <n-button type="warning" @click="handleNewPost(postData)"
+            >Publish</n-button
+         >
       </div>
    </div>
 </template>
@@ -60,6 +89,16 @@ const postData = reactive({
          max-width: 100%;
          border: none;
          border-bottom: 2px solid lightgray;
+      }
+
+      .error-message {
+         color: crimson;
+         font-weight: bold;
+      }
+
+      .success-message {
+         color: greenyellow;
+         font-weight: bold;
       }
    }
 }

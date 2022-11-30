@@ -1,9 +1,13 @@
 <script setup>
 import Post from "./Post.vue";
 
-const handleClick = () => {
-   console.log(post);
-};
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "../stores/authStore";
+
+const useAuth = useAuthStore();
+const { posts } = storeToRefs(useAuth);
+
+console.log(posts);
 </script>
 
 <template>
@@ -13,10 +17,10 @@ const handleClick = () => {
          <p>Here's what I've been thinking.</p>
       </div>
 
-      <div class="post-container">
-         <Post />
-         <Post />
+      <div v-if="posts" class="post-container">
+         <Post v-for="post in posts" :post="post" :key="post.id" />
       </div>
+      <div v-else>No posts. Check back later.</div>
    </div>
 </template>
 ;

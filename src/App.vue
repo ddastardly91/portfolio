@@ -6,7 +6,7 @@ import { useAuthStore } from "./stores/authStore";
 import Navbar from "./components/Navbar.vue";
 
 const useAuth = useAuthStore();
-const { getUser } = useAuth;
+const { getUser, getPosts } = useAuth;
 
 const themeOverrides = {
    common: {
@@ -21,6 +21,7 @@ const themeOverrides = {
 
 onMounted(() => {
    getUser();
+   getPosts();
 });
 </script>
 

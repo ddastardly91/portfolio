@@ -1,24 +1,21 @@
-<script setup></script>
+<script setup>
+const { post } = defineProps(["post"]);
+</script>
 
 <template>
-   <div class="post" @click="handleClick">
+   <div class="post">
       <div class="post-image">
-         <img
-            src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-            alt="post image"
-         />
+         <img :src="post.imageURL" alt="post image" />
       </div>
       <div class="post-content">
-         <h4>Header</h4>
+         <h4>{{ post.title }}</h4>
          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
-            inventore soluta totam temporibus eveniet explicabo tempora facilis
-            minima...
+            {{ post.content.substring(0, 150) + "...." }}
          </p>
       </div>
       <div class="post-details">
          <p><strong>Aaron</strong></p>
-         <p>29/11/2022</p>
+         <p>{{ new Date(post.created_at).toLocaleDateString() }}</p>
       </div>
    </div>
 </template>

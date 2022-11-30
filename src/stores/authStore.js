@@ -5,6 +5,8 @@ import { supabase } from "../../supabase";
 export const useAuthStore = defineStore("users", () => {
    const user = ref(null);
    const errorMessage = ref("");
+   const successMessage = ref("");
+   const posts = ref([]);
 
    // BASIC EMAIL VALIDATION
    const validateEmail = (email) => {
@@ -118,6 +120,62 @@ export const useAuthStore = defineStore("users", () => {
       user.value = null;
    };
 
+   const handleNewPost = async (postData) => {
+      const { title, content, file, authorID } = postData;
+
+      if (!title) {
+         return (errorMessage.value = "Title field cannot be empty.");
+      }
+
+      if (title.length < 3) {
+         return (errorMessage.value =
+            "Title length must be at least 3 characters.");
+      }
+
+      if (!content) {
+         return (errorMessage.value = "Content field cannot be empty.");
+      }
+
+      if (content.length < 20) {
+         return (errorMessage.value =
+            "Content must be at least 20 characters in length.");
+      }
+
+      if (!file) {
+         return (errorMessage.value = "You must add an image to your post.");
+      }
+
+      if (file.size > 1500000) {
+         return (errorMessage.value = "File size cannot exceed 1.5MB.");
+      }
+
+      if (!authorID) {
+         return (errorMessage.value =
+            "You must be logged in to create a post.");
+      }
+
+      const generateImageID = Math.floor(Math.random() * 10000000000000);
+      const { data, error } = await supabase.storage
+         .from("post-images")
+         .upload("public/" + generateImageID, file);
+
+      if (error) {
+         return (errorMessage.value = error.message);
+      }
+
+      let baseImgURL =
+         "https://vlunvffzaxoykpbpbatf.supabase.co/storage/v1/object/public/post-images/";
+
+      await supabase.from("posts").insert({
+         author_id: authorID,
+         title,
+         content,
+         imageURL: baseImgURL + data.path,
+      });
+
+      return (successMessage = "Post published successfully!");
+   };
+
    const getUser = async () => {
       const { data, error } = await supabase.auth.getUser();
 
@@ -139,17 +197,18 @@ export const useAuthStore = defineStore("users", () => {
       };
    };
 
-   const handleUpload = async (file) => {
-      const image = file.file.file;
-      const imageID = Math.floor(Math.random() * 1000000000000);
+   const getPosts = async () => {
+      const { data, error } = await supabase.from("posts").select("*");
 
-      const { data, error } = await supabase.storage
-         .from("post-images")
-         .upload("public/" + imageID, image);
+      if (!data) {
+         return (errorMsg.value = "There are no posts. Check back later.");
+      }
 
       if (error) {
-         return (errorMessage.value = error.message);
+         return (errorMsg.value = error.message);
       }
+
+      posts.value = data;
    };
 
    const clearErrorMessage = () => {
@@ -158,12 +217,15 @@ export const useAuthStore = defineStore("users", () => {
 
    return {
       user,
+      posts,
       errorMessage,
+      successMessage,
       handleLogin,
       handleSignup,
       handleLogout,
-      handleUpload,
+      handleNewPost,
       getUser,
+      getPosts,
       clearErrorMessage,
    };
 });
