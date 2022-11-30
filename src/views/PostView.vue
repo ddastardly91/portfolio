@@ -87,7 +87,7 @@ const deletePost = () => {
 
       img {
          width: 100%;
-         max-width: 500px;
+         max-width: 1440px;
          // height: 400px;
          object-fit: cover;
       }

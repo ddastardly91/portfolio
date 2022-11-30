@@ -22,7 +22,7 @@ const date = new Date(post.created_at).toLocaleDateString();
       <div class="post-details">
          <p v-if="post.created_at"><strong>Posted by Aaron</strong></p>
 
-         <p v-if="post.created_at">{{ date }} - {{ time }}</p>
+         <p v-if="post.created_at">{{ date }} @ {{ time }}</p>
          <a v-else :href="post.link" target="_blank">VIEW SITE</a>
       </div>
    </div>
