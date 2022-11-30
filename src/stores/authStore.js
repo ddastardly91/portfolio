@@ -118,6 +118,40 @@ export const useAuthStore = defineStore("users", () => {
       user.value = null;
    };
 
+   const getUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+
+      if (!data.user) {
+         console.error(error.message);
+         return (user.value = null);
+      }
+
+      const { data: userWithEmail } = await supabase
+         .from("users")
+         .select()
+         .eq("email", data.user.email)
+         .single();
+
+      user.value = {
+         id: userWithEmail.id,
+         email: userWithEmail.email,
+         username: userWithEmail.username,
+      };
+   };
+
+   const handleUpload = async (file) => {
+      const image = file.file.file;
+      const imageID = Math.floor(Math.random() * 1000000000000);
+
+      const { data, error } = await supabase.storage
+         .from("post-images")
+         .upload("public/" + imageID, image);
+
+      if (error) {
+         return (errorMessage.value = error.message);
+      }
+   };
+
    const clearErrorMessage = () => {
       errorMessage.value = "";
    };
@@ -128,6 +162,8 @@ export const useAuthStore = defineStore("users", () => {
       handleLogin,
       handleSignup,
       handleLogout,
+      handleUpload,
+      getUser,
       clearErrorMessage,
    };
 });

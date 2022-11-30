@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import Comment from "../components/Comment.vue";
+</script>
 
 <template>
    <div class="post-container">
@@ -55,6 +57,12 @@
          </p>
       </div>
    </div>
+   <div class="comment-container">
+      <h1>Comments</h1>
+      <Comment />
+      <Comment />
+      <Comment />
+   </div>
 </template>
 
 <style lang="scss" scoped>
@@ -103,5 +111,9 @@
          font-size: 30px;
       }
    }
+}
+.comment-container {
+   margin: 50px auto 0 auto;
+   max-width: 1440px;
 }
 </style>

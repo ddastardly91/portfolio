@@ -1,7 +1,12 @@
 <script setup>
+import { onMounted } from "vue";
 import { NConfigProvider } from "naive-ui";
 import { RouterView } from "vue-router";
+import { useAuthStore } from "./stores/authStore";
 import Navbar from "./components/Navbar.vue";
+
+const useAuth = useAuthStore();
+const { getUser } = useAuth;
 
 const themeOverrides = {
    common: {
@@ -13,6 +18,10 @@ const themeOverrides = {
       borderFocus: "1px solid rgba(255, 99, 71, 0.3)",
    },
 };
+
+onMounted(() => {
+   getUser();
+});
 </script>
 
 <template>
