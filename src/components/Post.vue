@@ -18,7 +18,7 @@ const { post } = defineProps(["post"]);
          </p>
       </div>
       <div class="post-details">
-         <p><strong>Aaron</strong></p>
+         <p v-if="post.created_at"><strong>Posted by Aaron</strong></p>
 
          <p v-if="post.created_at">
             {{ new Date(post.created_at).toLocaleDateString() }}
