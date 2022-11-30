@@ -99,6 +99,7 @@ import Card from "./Card.vue";
    .skills-bar {
       display: flex;
       align-items: center;
+
       img {
          margin-right: 10px;
          transition: 300ms ease;

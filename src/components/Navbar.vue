@@ -10,6 +10,7 @@ import {
    CommandLineIcon,
    ChatBubbleBottomCenterIcon,
    ShieldCheckIcon,
+   PencilIcon,
 } from "@heroicons/vue/24/outline";
 
 import { NInput, NDrawer, NDrawerContent, NAvatar, NPopover } from "naive-ui";
@@ -52,19 +53,19 @@ const menuActivate = () => {
                closable
             >
                <ul class="nav-list">
-                  <li>
+                  <li @click="menuActive = false">
                      <HomeIcon
                         :style="{ width: '25px', marginRight: '10px' }"
                      />
                      <RouterLink :to="{ name: 'home' }">Home</RouterLink>
                   </li>
-                  <li>
+                  <li @click="menuActive = false">
                      <CodeBracketIcon
                         :style="{ width: '25px', marginRight: '10px' }"
                      />
                      Projects
                   </li>
-                  <li>
+                  <li @click="menuActive = false">
                      <CommandLineIcon
                         :style="{ width: '25px', marginRight: '10px' }"
                      />
@@ -72,14 +73,25 @@ const menuActivate = () => {
                         >Github</a
                      >
                   </li>
-                  <li>
+                  <li @click="menuActive = false">
                      <ChatBubbleBottomCenterIcon
                         :style="{ width: '25px', marginRight: '10px' }"
                      />
                      Contact
                   </li>
                   <br />
-                  <li>
+                  <li @click="menuActive = false">
+                     <div v-if="user">
+                        <PencilIcon
+                           :style="{ width: '25px', marginRight: '10px' }"
+                        />
+
+                        <RouterLink :to="{ name: 'create' }"
+                           >Create Post</RouterLink
+                        >
+                     </div>
+                  </li>
+                  <li @click="menuActive = false">
                      <ShieldCheckIcon
                         :style="{ width: '25px', marginRight: '10px' }"
                      />

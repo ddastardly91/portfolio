@@ -42,8 +42,8 @@ const handleOpenPost = (postID) => {
    max-width: 1440px;
 
    .post-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
       gap: 20px;
    }
 

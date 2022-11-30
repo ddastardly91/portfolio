@@ -23,7 +23,10 @@ const { post } = defineProps(["post"]);
 <style lang="scss" scoped>
 .post {
    margin-top: 15px;
-   min-width: 280px;
+   min-width: 345px;
+   max-width: 345px;
+   flex: 1;
+   gap: 20px;
    border: 1px solid #efeff5;
    border-radius: 3px;
    cursor: pointer;
@@ -35,9 +38,12 @@ const { post } = defineProps(["post"]);
 
    .post-image {
       max-width: 100%;
+      max-height: 400px;
+      overflow: hidden;
 
       img {
-         max-width: 100%;
+         width: 100%;
+         object-fit: cover;
       }
    }
 
@@ -60,6 +66,12 @@ const { post } = defineProps(["post"]);
       justify-content: space-between;
       padding: 15px;
       background-color: #fafafc;
+   }
+}
+
+@media (max-width: 1036px) {
+   .post {
+      min-width: 100%;
    }
 }
 </style>

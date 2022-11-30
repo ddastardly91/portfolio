@@ -52,12 +52,12 @@ const deletePost = () => {
       </div>
    </div>
    <div v-else><h1>Post Loading...</h1></div>
-   <div class="comment-container">
+   <!-- <div class="comment-container">
       <h1>Comments</h1>
       <Comment />
       <Comment />
       <Comment />
-   </div>
+   </div> -->
 </template>
 
 <style lang="scss" scoped>

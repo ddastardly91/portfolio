@@ -5,7 +5,7 @@ import { supabase } from "../../supabase";
 export const useAuthStore = defineStore("users", () => {
    const user = ref(null);
    const errorMessage = ref("");
-   const successMessage = ref("");
+   let successMessage = ref("");
    const posts = ref([]);
    const singlePost = ref(null);
 
@@ -155,8 +155,8 @@ export const useAuthStore = defineStore("users", () => {
             "You must be logged in to create a post.");
       }
 
-      const generateImageID = Math.floor(Math.random() * 10000000000000);
-      const { data, error } = await supabase.storage
+      let generateImageID = Math.floor(Math.random() * 10000000000000);
+      let { data, error } = await supabase.storage
          .from("post-images")
          .upload("public/" + generateImageID, file);
 
@@ -164,14 +164,11 @@ export const useAuthStore = defineStore("users", () => {
          return (errorMessage.value = error.message);
       }
 
-      let baseImgURL =
-         "https://vlunvffzaxoykpbpbatf.supabase.co/storage/v1/object/public/post-images/";
-
       await supabase.from("posts").insert({
          author_id: authorID,
          title,
          content,
-         imageURL: baseImgURL + data.path,
+         imageURL: import.meta.env.VITE_BASE_IMAGE_URL + data.path,
       });
 
       return (successMessage = "Post published successfully!");
@@ -227,10 +224,7 @@ export const useAuthStore = defineStore("users", () => {
    };
 
    const handleDeletePost = async (postID) => {
-      const { data, error } = await supabase
-         .from("posts")
-         .delete()
-         .eq("id", postID);
+      const { error } = await supabase.from("posts").delete().eq("id", postID);
 
       if (error) {
          return (errorMessage.value = error.message);

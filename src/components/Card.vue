@@ -36,8 +36,9 @@ const themeOverrides = {
 
 <style lang="scss" scoped>
 .n-card {
-   min-width: 450px;
-   max-height: 470px;
+   min-width: 390px;
+   // max-width: 450px;
+   max-height: 520px;
    min-height: 470px;
 
    img {
@@ -56,6 +57,12 @@ const themeOverrides = {
 
    .n-button {
       float: right;
+   }
+}
+
+@media (max-width: 567px) {
+   .n-card {
+      max-width: calc(100% - 100px);
    }
 }
 </style>
