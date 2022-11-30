@@ -1,5 +1,7 @@
 <script setup>
 const { post } = defineProps(["post"]);
+const time = new Date(post.created_at).toLocaleTimeString();
+const date = new Date(post.created_at).toLocaleDateString();
 </script>
 
 <template>
@@ -20,9 +22,7 @@ const { post } = defineProps(["post"]);
       <div class="post-details">
          <p v-if="post.created_at"><strong>Posted by Aaron</strong></p>
 
-         <p v-if="post.created_at">
-            {{ new Date(post.created_at).toLocaleDateString() }}
-         </p>
+         <p v-if="post.created_at">{{ date }} - {{ time }}</p>
          <a v-else :href="post.link" target="_blank">VIEW SITE</a>
       </div>
    </div>
@@ -44,12 +44,17 @@ const { post } = defineProps(["post"]);
    }
 
    .post-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       max-width: 100%;
-      max-height: 400px;
+      min-height: 350px;
+      max-height: 350px;
+      background-color: #333;
       overflow: hidden;
 
       img {
-         min-height: 300px;
+         height: 350px;
          width: 100%;
          object-fit: cover;
       }
