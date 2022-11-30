@@ -1,62 +1,57 @@
 <script setup>
+import { useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "../stores/authStore";
 import Comment from "../components/Comment.vue";
+import { onBeforeMount } from "vue";
+import { TrashIcon } from "@heroicons/vue/24/outline";
+
+const useAuth = useAuthStore();
+const { getSinglePost, handleDeletePost } = useAuth;
+const { singlePost, successMessage, errorMessage } = storeToRefs(useAuth);
+const route = useRoute();
+
+onBeforeMount(() => {
+   getSinglePost(route.params.id);
+});
+
+const deletePost = () => {
+   handleDeletePost(route.params.id);
+   console.log(route.params.id);
+};
 </script>
 
 <template>
-   <div class="post-container">
+   <div class="post-container" v-if="singlePost">
       <div class="post-image">
-         <img
-            src="https://images.unsplash.com/photo-1604964432806-254d07c11f32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
-            alt=""
-         />
+         <img :src="singlePost.imageURL" />
       </div>
       <div class="post-header">
-         <h1>Post Title</h1>
+         <div v-if="successMessage" :style="{ color: 'green' }">
+            {{ successMessage }}
+         </div>
+         <div v-if="errorMessage" :style="{ color: 'crimson' }">
+            {{ errorMessage }}
+         </div>
+         <h1>
+            {{ singlePost.title }}
+            <TrashIcon class="icon" @click="deletePost" />
+         </h1>
          <div class="header-details">
             <p><strong>Author:</strong> Aaron</p>
-            <p><strong>Posted on:</strong> 11/29/2022</p>
+            <p>
+               <strong>Posted on:</strong>
+               {{ new Date(singlePost.created_at).toLocaleDateString() }}
+            </p>
          </div>
       </div>
       <div class="post-content">
          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-            mollitia fugit molestias in, magnam illum dolorem saepe
-            reprehenderit quo vero iste deserunt quisquam tenetur eos laboriosam
-            modi quae itaque doloremque. Enim aliquid nostrum fuga rem omnis
-            eius. Enim harum perspiciatis voluptas. Aspernatur iusto temporibus
-            cupiditate quis quo quos minima. Sapiente labore ipsam et? Voluptas,
-            quibusdam consequatur minima esse ea eveniet! Consequatur, in
-            exercitationem ex tempore aliquid cumque accusamus rem eveniet.
-            Odio, quidem! Ad, deleniti modi harum incidunt corporis sequi
-            laborum aliquid? Tempore perspiciatis quis quaerat eaque est nam
-            animi molestias. Possimus, ullam vel? Tenetur voluptates aperiam,
-            aliquam ex ea amet quia accusantium est, quaerat placeat earum?
-            Velit, corrupti id doloremque voluptate aspernatur porro et dolorem
-            dicta, reprehenderit aliquid assumenda libero? Praesentium sequi
-            similique voluptate ea, assumenda sunt cum voluptatibus soluta
-            aspernatur eius ullam voluptates. Inventore rerum totam numquam
-            officiis tenetur et nulla sint? Ipsa, officiis qui libero maiores id
-            animi! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Excepturi mollitia fugit molestias in, magnam illum dolorem saepe
-            reprehenderit quo vero iste deserunt quisquam tenetur eos laboriosam
-            modi quae itaque doloremque. Enim aliquid nostrum fuga rem omnis
-            eius. Enim harum perspiciatis voluptas. Aspernatur iusto temporibus
-            cupiditate quis quo quos minima. Sapiente labore ipsam et? Voluptas,
-            quibusdam consequatur minima esse ea eveniet! Consequatur, in
-            exercitationem ex tempore aliquid cumque accusamus rem eveniet.
-            Odio, quidem! Ad, deleniti modi harum incidunt corporis sequi
-            laborum aliquid? Tempore perspiciatis quis quaerat eaque est nam
-            animi molestias. Possimus, ullam vel? Tenetur voluptates aperiam,
-            aliquam ex ea amet quia accusantium est, quaerat placeat earum?
-            Velit, corrupti id doloremque voluptate aspernatur porro et dolorem
-            dicta, reprehenderit aliquid assumenda libero? Praesentium sequi
-            similique voluptate ea, assumenda sunt cum voluptatibus soluta
-            aspernatur eius ullam voluptates. Inventore rerum totam numquam
-            officiis tenetur et nulla sint? Ipsa, officiis qui libero maiores id
-            animi!
+            {{ singlePost.content }}
          </p>
       </div>
    </div>
+   <div v-else><h1>Post Loading...</h1></div>
    <div class="comment-container">
       <h1>Comments</h1>
       <Comment />
@@ -91,6 +86,12 @@ import Comment from "../components/Comment.vue";
       h1 {
          font-size: 50px;
          margin-top: 20px;
+      }
+
+      .icon {
+         width: 30px;
+         color: crimson;
+         cursor: pointer;
       }
    }
 

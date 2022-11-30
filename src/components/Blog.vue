@@ -1,13 +1,17 @@
 <script setup>
 import Post from "./Post.vue";
 
+import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "../stores/authStore";
 
 const useAuth = useAuthStore();
 const { posts } = storeToRefs(useAuth);
+const router = useRouter();
 
-console.log(posts);
+const handleOpenPost = (postID) => {
+   router.push("/post/" + postID);
+};
 </script>
 
 <template>
@@ -17,10 +21,17 @@ console.log(posts);
          <p>Here's what I've been thinking.</p>
       </div>
 
-      <div v-if="posts" class="post-container">
-         <Post v-for="post in posts" :post="post" :key="post.id" />
+      <div v-if="posts.length > 0" class="post-container">
+         <Post
+            v-for="post in posts"
+            :post="post"
+            :key="post.id"
+            @click="handleOpenPost(post.id)"
+         />
       </div>
-      <div v-else>No posts. Check back later.</div>
+      <div class="no-posts" v-else>
+         <h3>No posts. Check back later.</h3>
+      </div>
    </div>
 </template>
 ;
@@ -34,6 +45,14 @@ console.log(posts);
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
+   }
+
+   .no-posts {
+      text-align: center;
+
+      h3 {
+         font-size: 25px;
+      }
    }
 }
 

@@ -7,6 +7,7 @@ export const useAuthStore = defineStore("users", () => {
    const errorMessage = ref("");
    const successMessage = ref("");
    const posts = ref([]);
+   const singlePost = ref(null);
 
    // BASIC EMAIL VALIDATION
    const validateEmail = (email) => {
@@ -211,6 +212,33 @@ export const useAuthStore = defineStore("users", () => {
       posts.value = data;
    };
 
+   const getSinglePost = async (postID) => {
+      const { data, error } = await supabase
+         .from("posts")
+         .select()
+         .eq("id", postID)
+         .single();
+
+      if (error) {
+         return error.message;
+      }
+
+      return (singlePost.value = data);
+   };
+
+   const handleDeletePost = async (postID) => {
+      const { data, error } = await supabase
+         .from("posts")
+         .delete()
+         .eq("id", postID);
+
+      if (error) {
+         return (errorMessage.value = error.message);
+      }
+
+      return (successMessage.value = "Post deleted successfully.");
+   };
+
    const clearErrorMessage = () => {
       errorMessage.value = "";
    };
@@ -218,14 +246,17 @@ export const useAuthStore = defineStore("users", () => {
    return {
       user,
       posts,
+      singlePost,
       errorMessage,
       successMessage,
       handleLogin,
       handleSignup,
       handleLogout,
       handleNewPost,
+      handleDeletePost,
       getUser,
       getPosts,
+      getSinglePost,
       clearErrorMessage,
    };
 });
