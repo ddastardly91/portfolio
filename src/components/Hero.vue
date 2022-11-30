@@ -1,7 +1,7 @@
 <script setup>
 import { CommandLineIcon } from "@heroicons/vue/24/outline";
 import { latestProjects } from "../data/data";
-import Card from "./Card.vue";
+import Post from "./Post.vue";
 </script>
 
 <template>
@@ -34,21 +34,21 @@ import Card from "./Card.vue";
       <div class="featured-projects">
          <h3>Featured Projects</h3>
          <p>Why not take a look at some of my projects.</p>
-         <div class="grid-container">
-            <Card
-               v-for="project in latestProjects"
-               :key="project.id"
-               :data="project"
-            />
+
+         <div class="card-container">
+            <Post v-for="post in latestProjects" :key="post.id" :post="post" />
          </div>
       </div>
    </div>
 </template>
 
 <style lang="scss" scoped>
-.hero-container {
+.card-container {
    margin: 0 auto;
    max-width: 1440px;
+   display: flex;
+   gap: 20px;
+   flex-wrap: wrap;
 }
 
 .brand {
@@ -128,5 +128,16 @@ import Card from "./Card.vue";
 
 p {
    letter-spacing: 1.1px;
+}
+
+@media (max-width: 705px) {
+   .skills-bar {
+      display: flex;
+      flex-wrap: wrap;
+
+      img {
+         margin-bottom: 10px;
+      }
+   }
 }
 </style>

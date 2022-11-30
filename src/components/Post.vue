@@ -9,13 +9,21 @@ const { post } = defineProps(["post"]);
       </div>
       <div class="post-content">
          <h4>{{ post.title }}</h4>
-         <p>
+         <p v-if="post.created_at">
             {{ post.content.substring(0, 150) + "...." }}
+         </p>
+         <p v-else>{{ post.content }}</p>
+         <p v-if="post.skills">
+            <span v-for="skill in post.skills">{{ skill }}</span>
          </p>
       </div>
       <div class="post-details">
          <p><strong>Aaron</strong></p>
-         <p>{{ new Date(post.created_at).toLocaleDateString() }}</p>
+
+         <p v-if="post.created_at">
+            {{ new Date(post.created_at).toLocaleDateString() }}
+         </p>
+         <a v-else :href="post.link" target="_blank">VIEW SITE</a>
       </div>
    </div>
 </template>
@@ -24,7 +32,7 @@ const { post } = defineProps(["post"]);
 .post {
    margin-top: 15px;
    min-width: 345px;
-   max-width: 345px;
+   // max-width: 345px;
    flex: 1;
    gap: 20px;
    border: 1px solid #efeff5;
@@ -42,6 +50,7 @@ const { post } = defineProps(["post"]);
       overflow: hidden;
 
       img {
+         min-height: 300px;
          width: 100%;
          object-fit: cover;
       }
@@ -59,6 +68,16 @@ const { post } = defineProps(["post"]);
       p {
          font-size: 15px;
       }
+
+      span {
+         background-color: tomato;
+         padding: 2px 7px;
+         border-radius: 25px;
+         font-size: 12px;
+         margin-right: 5px;
+         color: white;
+         font-weight: 500;
+      }
    }
 
    .post-details {
@@ -66,6 +85,15 @@ const { post } = defineProps(["post"]);
       justify-content: space-between;
       padding: 15px;
       background-color: #fafafc;
+
+      a {
+         font-weight: bold;
+         color: rgb(0, 204, 160);
+
+         &:hover {
+            color: rgb(0, 146, 114);
+         }
+      }
    }
 }
 

@@ -1,7 +1,7 @@
 const latestProjects = [
    {
       id: "latest_1",
-      imgURL: "/latest-dawnpz.png",
+      imageURL: "/latest-dawnpz.png",
       title: "Dawn of the Dead",
       content:
          "A website I have created for a Project Zomboid community I founded.",
@@ -10,7 +10,7 @@ const latestProjects = [
    },
    {
       id: "latest_2",
-      imgURL: "/latest-ghsearch.png",
+      imageURL: "/latest-ghsearch.png",
       title: "Github Search",
       content:
          "A website that lets you search users in Github. Brad Traversty course.",
